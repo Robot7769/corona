@@ -1,0 +1,128 @@
+#!/bin/bash
+#TODO hlavička souboru
+#TODO err zprávy na stderr
+
+####################################################################
+## Help ##
+print_help () {
+    echo -e '\e[1;mJMÉNO\033[0m'
+    echo -e '  \033[1mcorona\033[0m — analyzátor záznamů osob s prokázanou nákazou koronavirem\n   způsobujícím onemocnění COVID-19\n'
+
+    echo -e '\033[1mPOUŽITÍ\033[0m'
+    echo -e '  \033[1mcorona\033[0m [\033[4m-h\033[0m] [\033[4mFILTERS\033[0m] [\033[4mCOMMAND\033[0m] [\033[4mLOG\033[0m [\033[4mLOG2\033[0m [...]]\n'
+
+    echo -e '\033[1mVOLBY\033[0m'
+    echo -e '  \033[1mCOMMAND\033[0m může být jeden z:'
+    echo -e '      \033[1minfected\033[0m — spočítá počet nakažených.'
+    echo -e '      \033[1mmerge\033[0m — sloučí několik souborů se záznamy do jednoho, zachovávající původní pořadí (hlavička bude ve výstupu jen jednou).'
+    echo -e '      \033[1mgender — vypíše počet nakažených pro jednotlivá pohlaví.'
+    echo -e '      \033[1mage\033[0m — vypíše statistiku počtu nakažených osob dle věku (bližší popis je níže).'
+    echo -e '      \033[1mdaily\033[0m — vypíše statistiku nakažených osob pro jednotlivé dny.'
+    echo -e '      \033[1mmonthly\033[0m — vypíše statistiku nakažených osob pro jednotlivé měsíce.'
+    echo -e '      \033[1myearly\033[0m — vypíše statistiku nakažených osob pro jednotlivé roky.'
+    echo -e '      \033[1mcountries\033[0m — vypíše statistiku nakažených osob pro jednotlivé země nákazy (bez ČR, tj. kódu CZ).'
+    echo -e '      \033[1mdistricts\033[0m — vypíše statistiku nakažených osob pro jednotlivé okresy.'
+    echo -e '      \033[1mregions\033[0m — vypíše statistiku nakažených osob pro jednotlivé kraje.'
+    echo ''
+   
+    
+    echo -e '  \033[1mFILTERS\033[0m může být kombinace následujících (každý maximálně jednou):'
+    echo -e '      \033[1m-a DATETIME\033[0m — after: jsou uvažovány pouze záznamy PO tomto datu (včetně tohoto data). DATETIME je formátu YYYY-MM-DD.'
+    echo -e '      \033[1m-b DATETIME\033[0m — before: jsou uvažovány pouze záznamy PŘED tímto datem (včetně tohoto data).'
+    echo -e '      \033[1m-g GENDER\033[0m — jsou uvažovány pouze záznamy nakažených osob daného pohlaví. GENDER může být M (muži) nebo Z (ženy).'
+    echo -e '      \033[1m-s [\033[4mWIDTH]\033[0m u příkazů gender, age, daily, monthly, yearly, countries, districts a regions vypisuje data ne číselně, ale graficky v podobě histogramů. Nepovinný parametr WIDTH nastavuje šířku histogramů, tedy délku nejdelšího řádku, na WIDTH. Tedy, WIDTH musí být kladné celé číslo. Pokud není parametr WIDTH uveden, řídí se šířky řádků výchozími hodnotami.'
+    echo -e '      \033[1m-d DISTRICT_FILE\033[0m — pro příkaz districts vypisuje místo LAU 1 kódu okresu jeho jméno. Mapování kódů na jména je v souboru DISTRICT_FILE --neimlplementováno'   #!--neimlplementováno
+    echo -e '      \033[1m-r REGIONS_FILE\033[0m — pro příkaz regions vypisuje místo NUTS 3 kódu kraje jeho jméno. Mapování kódů na jména je v souboru REGIONS_FILE --neimlplementováno'       #!--neimlplementováno
+
+}
+hlavicka () {
+    echo 'id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs'
+}
+filtr_pohlavi () {
+    awk -F, "-vG=$pohlavi" '{if (G == "") {print $0} else {if ($4 == G)  {print $0}} }'
+}
+####################################################################
+if [ "$#" -eq 0 ]; then
+   hlavicka 
+   
+   exit
+fi
+
+pohlavi=""
+pred_datum=""
+po_datum=""
+cmd=""
+soubor=""
+delka_grafu=0
+
+## Main ##
+while [ $# -ne 0 ]; do
+   case $1 in
+        -h) print_help; exit;;
+        -a) pred_datum=$2;shift;;
+        -b) po_datum=$2;shift;;
+        -g) pohlavi=$2;shift;;
+        -s) delka_grafu=$2;;        #!tady bude problém 
+        -d) echo '-d nebyl implementován';;
+        -r) echo '-r nebyl implementován';;
+        age | countries | daily | districts | gender | infected | merge | monthly | regions ) if [ -z $cmd ]; then
+                cmd=$1
+            else
+                #*error
+                echo 'COMMAND může být jen jeden'
+                exit
+            fi ;;
+        *.gz) ;; #unzip cut 
+        *.bz2) ;; #unzip cut 
+        *.csv) soubor="$1";;
+
+   esac
+shift
+done
+
+case "${cmd}" in
+    age)
+        echo "item = 1"
+    ;;
+    countries)
+        echo "item = 2 or item = 3"
+    ;;
+    daily)
+        echo "default (none of above)"
+    ;;
+    districts)
+
+    ;;
+    gender)
+
+    ;;
+    infected)
+    
+        cat ${soubor} | filtr_pohlavi | awk -F, '{$0} END{ print NR}'
+    ;;
+    merge)
+
+    ;;
+    monthly)
+
+    ;;
+    regions)
+
+    ;;
+esac
+
+# G="Z"; cat osoby-short.csv | awk -F, "-vG=$G" '$4 == G {print $0}'
+# awk -F, 'BEGIN{pocet=0} {if ($0 > 0) {pocet++}} END{print pocet}'
+
+
+
+#echo $pohlavi $pred_datum $po_datum $cmd;
+
+#awk -F ',' '{ if($3 == $'"$pohlavi"') print $0;}' osoby-short.csv
+
+
+
+#awk 'BEGIN{RS=ORS="\r\n"} $4==$pohlavi {print $1 $2 $3 $4 $5}' osoby-short.csv
+
+#cat osoby-short.csv | awk '$='
+

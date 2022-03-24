@@ -78,8 +78,8 @@ while [ $# -ne 0 ]; do
                 echo 'COMMAND může být jen jeden' >&2
                 exit
             fi ;;
-        *.gz) ;; #unzip cut 
-        *.bz2) ;; #unzip cut 
+        *.gz) zcat "$1" ;; #unzip cut 
+        *.bz2) bzcat "$1";; #unzip cut 
         *.csv) soubor="$1";;
 
    esac

@@ -39,7 +39,12 @@ hlavicka () {
     echo 'id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs'
 }
 filtr_pohlavi () {
-    awk -F, "-vG=$pohlavi" '{if (G == "") {print $0} else {if ($4 == G)  {print $0}} }'
+    awk -F, "-vG=$pohlavi" '{
+        if (G == "") {print $0} 
+        else {
+            if ($4 == G)  {print $0}
+            } 
+        }'
 }
 ####################################################################
 if [ "$#" -eq 0 ]; then

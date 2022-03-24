@@ -1,6 +1,7 @@
 #!/bin/bash
 #TODO hlavička souboru
 #TODO err zprávy na stderr
+#!BUG bez filtru to počítá i první řádek infected
 
 ####################################################################
 ## Help ##

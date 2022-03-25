@@ -138,6 +138,9 @@ case "${cmd}" in
     ;;
     infected)
         cat ${soubor}| sed 1d | filtry | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'
+        #pocet_radku=0;
+        #cat ${soubor}| sed 1d | filtry | awk -F, "-vradek=$pocet_radku" '{if ($0 > 0) radek++} END{"$pocet_radku" <= radek}'
+        #echo $pocet_radku
     ;;
     merge)
 

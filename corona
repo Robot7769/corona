@@ -99,7 +99,7 @@ case "${cmd}" in
     districts)
 
     ;;
-    gender)
+    gender) awk -F, 'BEGIN{M=0;Z=0} {if ($4=="M") M++; if ($4=="Z") Z++} END{print "M: "M"\nZ: "Z""}'
 
     ;;
     infected)

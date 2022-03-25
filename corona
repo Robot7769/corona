@@ -147,6 +147,9 @@ case "${cmd}" in
     regions)
 
     ;;
+    *) hlavicka;
+    cat ${soubor}| sed 1d | filtry 
+    ;;
 esac
 
 # G="Z"; cat osoby-short.csv | awk -F, "-vG=$G" '$4 == G {print $0}'

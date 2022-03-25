@@ -50,6 +50,37 @@ filtr_pohlavi () {
 filtry () {
     filtr_pohlavi
 }
+vek () {
+    cat ${soubor}| sed 1d | sort -t, -k3 | filtry | awk -F, '{
+        if (($3 >= 0) && ($3 <= 5)) age_cont[0]++;
+        if (($3 >= 6) && ($3 <= 15)) age_cont[1]++;
+        if (($3 >= 16) && ($3 <= 25)) age_cont[2]++;
+        if (($3 >= 26) && ($3 <= 35)) age_cont[3]++;
+        if (($3 >= 36) && ($3 <= 45)) age_cont[4]++;
+        if (($3 >= 46) && ($3 <= 55)) age_cont[5]++;
+        if (($3 >= 56) && ($3 <= 65)) age_cont[6]++;
+        if (($3 >= 66) && ($3 <= 75)) age_cont[7]++;
+        if (($3 >= 76) && ($3 <= 85)) age_cont[8]++;
+        if (($3 >= 86) && ($3 <= 95)) age_cont[9]++;
+        if (($3 >= 96) && ($3 <= 105)) age_cont[10]++;
+        if ($3 > 105) age_cont[11]++;
+        if ($3 == "") age_cont[12]++;
+        }
+        END{print "0-5   : "age_cont[0];
+            print "6-15  : "age_cont[1];
+            print "16-25 : "age_cont[2];
+            print "26-35 : "age_cont[3];
+            print "36-45 : "age_cont[4];
+            print "46-55 : "age_cont[5];
+            print "56-65 : "age_cont[6];
+            print "66-75 : "age_cont[7];
+            print "76-85 : "age_cont[8];
+            print "86-95 : "age_cont[9];
+            print "96-105: "age_cont[10];
+            print ">105  : "age_cont[11];
+            print "None  : "age_cont[12];
+            }'
+}
 ####################################################################
 if [ "$#" -eq 0 ]; then
    hlavicka 

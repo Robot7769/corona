@@ -103,8 +103,7 @@ case "${cmd}" in
 
     ;;
     infected)
-    
-        cat ${soubor} | filtr_pohlavi | awk -F, '{$0} END{ print NR}'
+        cat ${soubor}| sed 1d | filtr_pohlavi | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'
     ;;
     merge)
 

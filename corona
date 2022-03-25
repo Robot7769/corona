@@ -51,7 +51,7 @@ filtry () {
     filtr_pohlavi
 }
 vek () {
-    cat ${soubor}| sed 1d | sort -t, -k3 | filtry | awk -F, '{
+    cat ${soubor}| sed 1d | filtry | awk -F, '{
         if (($3 >= 0) && ($3 <= 5)) age_cont[0]++;
         if (($3 >= 6) && ($3 <= 15)) age_cont[1]++;
         if (($3 >= 16) && ($3 <= 25)) age_cont[2]++;
@@ -82,11 +82,11 @@ vek () {
             }'
 }
 ####################################################################
-if [ "$#" -eq 0 ]; then
-   hlavicka 
-   
-   exit
-fi
+#if [ "$#" -eq 0 ]; then
+#   hlavicka 
+#   cat ${soubor}
+#   exit
+#fi
 
 pohlavi=""
 pred_datum=""

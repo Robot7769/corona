@@ -121,8 +121,7 @@ shift
 done
 
 case "${cmd}" in
-    age)
-        echo "item = 1"
+    age) vek
     ;;
     countries)
         echo "item = 2 or item = 3"

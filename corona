@@ -47,6 +47,9 @@ filtr_pohlavi () {
             } 
         }'
 }
+filtry () {
+    filtr_pohlavi
+}
 ####################################################################
 if [ "$#" -eq 0 ]; then
    hlavicka 
@@ -58,7 +61,7 @@ pohlavi=""
 pred_datum=""
 po_datum=""
 cmd=""
-soubor=""
+soubor="/dev/stdin"
 delka_grafu=0
 
 ## Main ##
@@ -103,7 +106,7 @@ case "${cmd}" in
 
     ;;
     infected)
-        cat ${soubor}| sed 1d | filtr_pohlavi | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'
+        cat ${soubor}| sed 1d | filtry | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'
     ;;
     merge)
 

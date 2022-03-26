@@ -89,7 +89,9 @@ vek () {
             print "86-95 : "age_cont[9];
             print "96-105: "age_cont[10];
             print ">105  : "age_cont[11];
-            print "None  : "age_cont[12];
+            if (age_cont[12] > 0) {
+                print "None  : "age_cont[12];
+            }
             }'
 }
 ####################################################################

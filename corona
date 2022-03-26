@@ -249,7 +249,25 @@ case "${cmd}" in
     regions)
 
     ;;
-    yearly)
+    yearly) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{
+        if (NR == 1) {
+            datum=substr($2,1,4);
+            count=0;
+        } 
+     } 
+     {
+        if (datum == substr($2,1,4)) {
+            count++;
+        }
+        else {
+            print ""datum": "count"";
+            count=1;
+            datum=substr($2,1,4);
+        }
+     } 
+     END{
+        print ""datum": "count"";
+    }'
 
     ;;
     *) hlavicka;

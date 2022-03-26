@@ -183,10 +183,12 @@ case "${cmd}" in
     ;;
     daily) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{
         if (NR == 1) {
-            datum=$2;count=0;
+            datum=$2;
+            count=0;
         } 
-    } {
-        if (datum == $2){
+     } 
+     {
+        if (datum == $2) {
             count++;
         }
         else {
@@ -194,7 +196,8 @@ case "${cmd}" in
             count=1;
             datum=$2;
         }
-    } END{
+     } 
+     END{
         print ""datum": "count"";
     }'
         
@@ -221,12 +224,14 @@ case "${cmd}" in
     merge)
 
     ;;
-    monthly)cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{
+    monthly) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{
         if (NR == 1) {
-            datum=substr($2,1,7);count=0;
+            datum=substr($2,1,7);
+            count=0;
         } 
-    } {
-        if (datum == substr($2,1,7)){
+     } 
+     {
+        if (datum == substr($2,1,7)) {
             count++;
         }
         else {
@@ -234,7 +239,8 @@ case "${cmd}" in
             count=1;
             datum=substr($2,1,7);
         }
-    } END{
+     } 
+     END{
         print ""datum": "count"";
     }'
 

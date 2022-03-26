@@ -47,8 +47,24 @@ filtr_pohlavi () {
         } 
     }'
 }
+filtr_po () {
+    awk -F, "-vdatum=$po_datum" '{
+        if (datum == "") {print $0} 
+        else {
+            if ($2 >= datum)  {print $0}
+        } 
+    }'
+}
+filtr_pred () {
+    awk -F, "-vdatum=$pred_datum" '{
+        if (datum == "") {print $0} 
+        else {
+            if ($2 <= datum)  {print $0}
+        } 
+    }'
+}
 filtry () {
-    filtr_pohlavi
+    filtr_pohlavi | filtr_pred | filtr_po
 }
 valid_datum () {
    if [[ -n "$1" ]]; then
@@ -114,8 +130,8 @@ delka_grafu=-1
 while [ $# -ne 0 ]; do
    case $1 in
         -h) print_help; exit;;
-        -a) pred_datum=$2;shift;;
-        -b) po_datum=$2;shift;;
+        -a) po_datum=$2;shift;;
+        -b) pred_datum=$2;shift;;
         -g) pohlavi=$2;shift;;
         -s) if  [[ $2 =~ $cislo ]]; then
                 delka_grafu=$2;
@@ -145,15 +161,15 @@ if [ -z soubor ]; then
     soubor="/dev/stdin"
 fi
 
-valid_datum $pred_datum
+valid_datum $po_datum
 if [ $? == 1 ]; then
-    echo "Datum u přepínače -a "$pred_datum" není validní" 1>&2
+    echo "Datum u přepínače -a "$po_datum" není validní" 1>&2
     exit
 fi
 
-valid_datum $po_datum
+valid_datum $pred_datum
 if [ $? == 1 ]; then
-    echo "Datum u přepínače -b "$po_datum" není validní" 1>&2
+    echo "Datum u přepínače -b "$pred_datum" není validní" 1>&2
     exit
 fi
 

@@ -179,8 +179,34 @@ fi
 case "${cmd}" in
     age) vek
     ;;
-    countries)
-        echo "item = 2 or item = 3"
+    countries) cat ${soubor}| sed 1d | filtry | sort -t, -k8 | awk -F, 'BEGIN {
+        zeme="";
+        count=0;
+        none=0;
+    }
+    {
+        if ($8 == "") {
+            none++;
+        } 
+    } 
+    {
+        if (zeme == "") {
+            zeme=$8;
+            next;
+        }
+        if (zeme == $8) {
+            count++;
+        }
+        else {
+            if (zeme != "CZ") {print ""zeme": "count"";}
+            count=1;
+            zeme=$8;
+        }
+    } 
+    END{
+        if (zeme != "") {print ""datum": "count"";}
+        if (none > 0) {print "None: "none"";}
+    }'
         
     ;;
     daily) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{

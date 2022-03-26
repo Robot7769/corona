@@ -99,12 +99,14 @@ vek () {
 #   exit
 #fi
 
+cislo='^[0-9]+$'
+
 pohlavi=""
 pred_datum=""
 po_datum=""
 cmd=""
 soubor=""
-delka_grafu=0
+delka_grafu=-1
 
 ## Main ##
 while [ $# -ne 0 ]; do
@@ -113,7 +115,13 @@ while [ $# -ne 0 ]; do
         -a) pred_datum=$2;shift;;
         -b) po_datum=$2;shift;;
         -g) pohlavi=$2;shift;;
-        -s) delka_grafu=$2;;        #!tady bude problém 
+        -s) if  [[ $2 =~ $cislo ]]; then
+                delka_grafu=$2;
+                shift;        #!tady bude problém 
+            else
+                delka_grafu=0;
+            fi
+            ;;
         -d) echo '-d nebyl implementován';;
         -r) echo '-r nebyl implementován';;
         age | countries | daily | districts | gender | infected | merge | monthly | regions ) if [ -z $cmd ]; then
@@ -184,6 +192,7 @@ case "${cmd}" in
     ;;
 esac
 
+#echo "-s je :"$delka_grafu""
 # G="Z"; cat osoby-short.csv | awk -F, "-vG=$G" '$4 == G {print $0}'
 # awk -F, 'BEGIN{pocet=0} {if ($0 > 0) {pocet++}} END{print pocet}'
 

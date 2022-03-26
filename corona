@@ -103,7 +103,7 @@ pohlavi=""
 pred_datum=""
 po_datum=""
 cmd=""
-soubor="/dev/stdin"
+soubor=""
 delka_grafu=0
 
 ## Main ##
@@ -125,7 +125,7 @@ while [ $# -ne 0 ]; do
             fi ;;
         *.gz) zcat "$1" ;; #add check comand 
         *.bz2) bzcat "$1";; #add check comand
-        *.csv) soubor="$1";;
+        *.csv) soubor+=" $1";;
 
    esac
 shift

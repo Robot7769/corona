@@ -44,8 +44,8 @@ filtr_pohlavi () {
         if (G == "") {print $0} 
         else {
             if ($4 == G)  {print $0}
-            } 
-        }'
+        } 
+    }'
 }
 filtry () {
     filtr_pohlavi

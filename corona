@@ -142,7 +142,8 @@ while [ $# -ne 0 ]; do
             ;;
         -d) echo '-d nebyl implementován';;
         -r) echo '-r nebyl implementován';;
-        age | countries | daily | districts | gender | infected | merge | monthly | regions ) if [ -z $cmd ]; then
+        age | countries | daily | districts | gender | infected | merge | monthly | regions | yearly )
+             if [ -z $cmd ]; then
                 cmd=$1
             else
                 #*error
@@ -246,6 +247,9 @@ case "${cmd}" in
 
     ;;
     regions)
+
+    ;;
+    yearly)
 
     ;;
     *) hlavicka;

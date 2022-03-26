@@ -50,6 +50,16 @@ filtr_pohlavi () {
 filtry () {
     filtr_pohlavi
 }
+valid_datum () {
+   if [[ -n "$1" ]]; then
+        if [[ $1 =~ ^[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$ ]] && date "+%Y-%m-%d" -d "$1" > /dev/null 2>&1; then
+            return 0
+        else
+            return 1
+        fi 
+   fi
+   
+}
 vek () {
     cat ${soubor}| sed 1d | filtry | awk -F, '{
         if ($3 == "") age_cont[12]++;
@@ -120,6 +130,24 @@ while [ $# -ne 0 ]; do
    esac
 shift
 done
+
+if [ -z soubor ]; then
+    soubor="/dev/stdin"
+fi
+
+valid_datum $pred_datum
+if [ $? == 1 ]; then
+    echo "Datum u přepínače -a "$pred_datum" není validní" 1>&2
+    exit
+fi
+
+valid_datum $po_datum
+if [ $? == 1 ]; then
+    echo "Datum u přepínače -b "$po_datum" není validní" 1>&2
+    exit
+fi
+
+
 
 case "${cmd}" in
     age) vek

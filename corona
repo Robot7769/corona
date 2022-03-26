@@ -181,8 +181,23 @@ case "${cmd}" in
     countries)
         echo "item = 2 or item = 3"
     ;;
-    daily)
-        echo "default (none of above)"
+    daily) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{
+        if (NR == 1) {
+            datum=$2;count=0;
+        } 
+    } {
+        if (datum == $2){
+            count++;
+        }
+        else {
+            print ""datum": "count"";
+            count=1;
+            datum=$2;
+        }
+    } END{
+        print ""datum": "count"";
+    }'
+        
     ;;
     districts)
 

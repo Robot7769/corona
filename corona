@@ -78,35 +78,35 @@ valid_datum () {
 }
 vek () {
     cat ${soubor}| sed 1d | filtry | awk -F, '{
-        if ($3 == "") age_cont[12]++;
-        else if ($3 <= 5) age_cont[0]++;
-        else if ($3 <= 15) age_cont[1]++;
-        else if ($3 <= 25) age_cont[2]++;
-        else if ($3 <= 35) age_cont[3]++;
-        else if ($3 <= 45) age_cont[4]++;
-        else if ($3 <= 55) age_cont[5]++;
-        else if ($3 <= 65) age_cont[6]++;
-        else if ($3 <= 75) age_cont[7]++;
-        else if ($3 <= 85) age_cont[8]++;
-        else if ($3 <= 95) age_cont[9]++;
-        else if ($3 <= 105) age_cont[10]++;
-        else if ($3 > 105) age_cont[11]++;
+        if ($3 == "") age_count[12]++;
+        else if ($3 <= 5) age_count[0]++;
+        else if ($3 <= 15) age_count[1]++;
+        else if ($3 <= 25) age_count[2]++;
+        else if ($3 <= 35) age_count[3]++;
+        else if ($3 <= 45) age_count[4]++;
+        else if ($3 <= 55) age_count[5]++;
+        else if ($3 <= 65) age_count[6]++;
+        else if ($3 <= 75) age_count[7]++;
+        else if ($3 <= 85) age_count[8]++;
+        else if ($3 <= 95) age_count[9]++;
+        else if ($3 <= 105) age_count[10]++;
+        else if ($3 > 105) age_count[11]++;
         else;
         }
-        END{print "0-5   : "age_cont[0];
-            print "6-15  : "age_cont[1];
-            print "16-25 : "age_cont[2];
-            print "26-35 : "age_cont[3];
-            print "36-45 : "age_cont[4];
-            print "46-55 : "age_cont[5];
-            print "56-65 : "age_cont[6];
-            print "66-75 : "age_cont[7];
-            print "76-85 : "age_cont[8];
-            print "86-95 : "age_cont[9];
-            print "96-105: "age_cont[10];
-            print ">105  : "age_cont[11];
-            if (age_cont[12] > 0) {
-                print "None  : "age_cont[12];
+        END{print "0-5   : "age_count[0];
+            print "6-15  : "age_count[1];
+            print "16-25 : "age_count[2];
+            print "26-35 : "age_count[3];
+            print "36-45 : "age_count[4];
+            print "46-55 : "age_count[5];
+            print "56-65 : "age_count[6];
+            print "66-75 : "age_count[7];
+            print "76-85 : "age_count[8];
+            print "86-95 : "age_count[9];
+            print "96-105: "age_count[10];
+            print ">105  : "age_count[11];
+            if (age_count[12] > 0) {
+                print "None  : "age_count[12];
             }
             }'
 }

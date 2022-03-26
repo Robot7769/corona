@@ -300,7 +300,34 @@ case "${cmd}" in
     }'
 
     ;;
-    regions)
+    regions) cat ${soubor}| sed 1d | filtry | sort -t, -k5 | awk -F, 'BEGIN {
+        zeme="";
+        count=1;
+        none=0;
+    }
+    {
+        if ($5 == "") {
+            none++;
+        } 
+    } 
+    {
+        if (zeme == "") {
+            zeme=$5;
+            next;
+        }
+        if (zeme == $5) {
+            count++;
+        }
+        else {
+            if (zeme != "CZ") {print ""zeme": "count"";}
+            count=1;
+            zeme=$5;
+        }
+    } 
+    END{
+        if (zeme != "") {print ""zeme": "count"";}
+        if (none > 0) {print "None: "none"";}
+    }'
 
     ;;
     yearly) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{

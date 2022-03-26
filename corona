@@ -171,8 +171,15 @@ case "${cmd}" in
     districts)
 
     ;;
-    gender) awk -F, 'BEGIN{M=0;Z=0} {if ($4=="M") M++; if ($4=="Z") Z++} END{print "M: "M"\nZ: "Z""}'
-
+    gender) cat ${soubor}| sed 1d | filtry | awk -F, 'BEGIN{M=0;Z=0;count=0;none=0} {
+        if ($4=="M") M++;
+        if ($4=="Z") Z++;
+        count++;
+        } 
+        END{
+        print "M: "M"\nZ: "Z"";
+        if (none=(count - M - Z )> 0) print "None: "none""; 
+        }'
     ;;
     infected)
         cat ${soubor}| sed 1d | filtry | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'

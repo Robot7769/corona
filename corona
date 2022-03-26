@@ -181,7 +181,7 @@ case "${cmd}" in
     ;;
     countries) cat ${soubor}| sed 1d | filtry | sort -t, -k8 | awk -F, 'BEGIN {
         zeme="";
-        count=0;
+        count=1;
         none=0;
     }
     {
@@ -204,7 +204,7 @@ case "${cmd}" in
         }
     } 
     END{
-        if (zeme != "") {print ""datum": "count"";}
+        if (zeme != "") {print ""zeme": "count"";}
         if (none > 0) {print "None: "none"";}
     }'
         

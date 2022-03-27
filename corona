@@ -169,7 +169,12 @@ while [ $# -ne 0 ]; do
         -h) print_help; exit;;
         -a) po_datum=$2;shift;;
         -b) pred_datum=$2;shift;;
-        -g) pohlavi=$2;shift;;
+        -g) pohlavi=$2;shift;
+            if [[ pohlavi != "M" || pohlavi != "Z" ]]; then
+                echo "U přepínače -g je $pohlavi což není validní" 1>&2
+                exit
+            fi
+            ;;
         -s) if  [[ $2 =~ ^[0-9]+$ ]]; then
                 delka_grafu=$2;
                 shift;        #!tady bude problém 

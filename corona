@@ -50,17 +50,23 @@ filtr_pohlavi () {
 }
 filtr_po () {
     awk -F, "-vdatum=$po_datum" '{
-        if (datum == "") {print $0} 
-        else {
-            if ($2 >= datum)  {print $0}
-        } 
+        if (datum == "") {
+            print $0;
+        } else if ($2 >= datum)  {
+            print $0;
+        } else if ($2 == "") {
+            print $0;
+        }
     }'
 }
 filtr_pred () {
     awk -F, "-vdatum=$pred_datum" '{
-        if (datum == "") {print $0} 
-        else {
-            if ($2 <= datum)  {print $0}
+        if (datum == "") {
+            print $0;
+        } else if ($2 <= datum)  {
+            print $0;
+        } else if ($2 == "") {
+            print $0;
         } 
     }'
 }

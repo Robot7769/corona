@@ -77,10 +77,22 @@ valid_datum () {
 }
 vek () {
     cat ${soubor}| sed 1d | filtry | awk -F, "-vdelka_grafu=$delka_grafu" 'BEGIN{
-        age_count[0]=0; age_count[1]=0; age_count[2]=0; age_count[3]=0; 
-        age_count[4]=0; age_count[5]=0; age_count[6]=0; age_count[7]=0; 
-        age_count[8]=0; age_count[9]=0; age_count[10]=0; age_count[11]=0;
-        age_count[12]=0;  
+        for (i=0; i <= 12; i++) {
+            age_count[i]=0;
+        }
+        age_text[0]="0-5   : ";
+        age_text[1]="6-15  : "; 
+        age_text[2]="16-25 : "; 
+        age_text[3]="26-35 : "; 
+        age_text[4]="36-45 : "; 
+        age_text[5]="46-55 : "; 
+        age_text[6]="56-65 : "; 
+        age_text[7]="66-75 : "; 
+        age_text[8]="76-85 : "; 
+        age_text[9]="86-95 : "; 
+        age_text[10]="96-105: "; 
+        age_text[11]=">105  : ";
+        age_text[12]="None  : ";  
     }
     {
         if ($3 == "") age_count[12]++;
@@ -97,56 +109,37 @@ vek () {
         else if ($3 <= 105) age_count[10]++;
         else if ($3 > 105) age_count[11]++;
         else;
-        }
-        END{if (delka_grafu == -1) {
-                print "0-5   : "age_count[0];
-                print "6-15  : "age_count[1];
-                print "16-25 : "age_count[2];
-                print "26-35 : "age_count[3];
-                print "36-45 : "age_count[4];
-                print "46-55 : "age_count[5];
-                print "56-65 : "age_count[6];
-                print "66-75 : "age_count[7];
-                print "76-85 : "age_count[8];
-                print "86-95 : "age_count[9];
-                print "96-105: "age_count[10];
-                print ">105  : "age_count[11];
-                if (age_count[12] > 0) {
-                    print "None  : "age_count[12];
-                }
-            } else {
-                if (delka_grafu == 0) {delka_grafu=100000;
-                    KR0=sprintf("%"int(age_count[0]/delka_grafu)"s","");  gsub(" ","#",KR0); 
-                    print "0-5   : "KR0;
-                    KR1=sprintf("%"int(age_count[1]/delka_grafu)"s","");  gsub(" ","#",KR1); 
-                    print "6-15  : "KR1;
-                    KR2=sprintf("%"int(age_count[2]/delka_grafu)"s","");  gsub(" ","#",KR2); 
-                    print "16-25 : "KR2;
-                    KR3=sprintf("%"int(age_count[3]/delka_grafu)"s","");  gsub(" ","#",KR3); 
-                    print "26-35 : "KR3;
-                    KR4=sprintf("%"int(age_count[4]/delka_grafu)"s","");  gsub(" ","#",KR4); 
-                    print "36-45 : "KR4;
-                    KR5=sprintf("%"int(age_count[5]/delka_grafu)"s","");  gsub(" ","#",KR5); 
-                    print "46-55 : "KR5;
-                    KR6=sprintf("%"int(age_count[6]/delka_grafu)"s","");  gsub(" ","#",KR6); 
-                    print "56-65 : "KR6;
-                    KR7=sprintf("%"int(age_count[7]/delka_grafu)"s","");  gsub(" ","#",KR7); 
-                    print "66-75 : "KR7;
-                    KR8=sprintf("%"int(age_count[8]/delka_grafu)"s","");  gsub(" ","#",KR8); 
-                    print "76-85 : "KR8;
-                    KR9=sprintf("%"int(age_count[9]/delka_grafu)"s","");  gsub(" ","#",KR9); 
-                    print "86-95 : "KR9;
-                    KR10=sprintf("%"int(age_count[10]/delka_grafu)"s","");  gsub(" ","#",KR10); 
-                    print "96-105: "KR10;
-                    KR11=sprintf("%"int(age_count[11]/delka_grafu)"s","");  gsub(" ","#",KR11); 
-                    print ">105  : "KR11;
-                    if (age_count[12] > 0) {
-                        KR12=sprintf("%"int(age_count[12]/delka_grafu)"s","");  gsub(" ","#",KR12); 
-                        print "None  : "KR12;
+    }
+    END{if (delka_grafu == -1) { 
+            for (i=0; i < 12; i++) {
+                print age_text[i] age_count[i];
+            }
+            if (age_count[12] > 0) {
+                print age_text[12] age_count[12];
+            }
+        } else {
+            if (delka_grafu == 0) {delka_grafu=10000;}
+            else {
+                tpm=age_count[0];
+                for (i=0; i <= 12; i++) {
+                    if (tmp < age_count[i] ) {
+                        tmp=age_count[i];
                     }
                 }
-            }    
-        }'
+                delka_grafu=int(tmp/delka_grafu);
+            }
+            for (i=0; i < 12; i++) {
+                histogram=sprintf("%"int(age_count[i]/delka_grafu)"s","");  
+                gsub(" ","#",histogram); 
+                print age_text[i] histogram;
+            }
+            if (age_count[12] > 0) {
+                histogram=sprintf("%"int(age_count[12]/delka_grafu)"s","");  
+                gsub(" ","#",histogram); 
+                print age_text[i] histogram;
+            }
+        }    
+    }'
 }
 ####################################################################
 #if [ "$#" -eq 0 ]; then

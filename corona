@@ -115,34 +115,35 @@ vek () {
                     print "None  : "age_count[12];
                 }
             } else {
-                if (delka_grafu == 0) {delka_grafu=100000;}
-                KR0=sprintf("%"int(age_count[0]/delka_grafu)"s","");  gsub(" ","#",KR0); 
-                print "0-5   : "KR0;
-                KR1=sprintf("%"int(age_count[1]/delka_grafu)"s","");  gsub(" ","#",KR1); 
-                print "6-15  : "KR1;
-                KR2=sprintf("%"int(age_count[2]/delka_grafu)"s","");  gsub(" ","#",KR2); 
-                print "16-25 : "KR2;
-                KR3=sprintf("%"int(age_count[3]/delka_grafu)"s","");  gsub(" ","#",KR3); 
-                print "26-35 : "KR3;
-                KR4=sprintf("%"int(age_count[4]/delka_grafu)"s","");  gsub(" ","#",KR4); 
-                print "36-45 : "KR4;
-                KR5=sprintf("%"int(age_count[5]/delka_grafu)"s","");  gsub(" ","#",KR5); 
-                print "46-55 : "KR5;
-                KR6=sprintf("%"int(age_count[6]/delka_grafu)"s","");  gsub(" ","#",KR6); 
-                print "56-65 : "KR6;
-                KR7=sprintf("%"int(age_count[7]/delka_grafu)"s","");  gsub(" ","#",KR7); 
-                print "66-75 : "KR7;
-                KR8=sprintf("%"int(age_count[8]/delka_grafu)"s","");  gsub(" ","#",KR8); 
-                print "76-85 : "KR8;
-                KR9=sprintf("%"int(age_count[9]/delka_grafu)"s","");  gsub(" ","#",KR9); 
-                print "86-95 : "KR9;
-                KR10=sprintf("%"int(age_count[10]/delka_grafu)"s","");  gsub(" ","#",KR10); 
-                print "96-105: "KR10;
-                KR11=sprintf("%"int(age_count[11]/delka_grafu)"s","");  gsub(" ","#",KR11); 
-                print ">105  : "KR11;
-                if (age_count[12] > 0) {
-                    KR12=sprintf("%"int(age_count[12]/delka_grafu)"s","");  gsub(" ","#",KR12); 
-                    print "None  : "KR12;
+                if (delka_grafu == 0) {delka_grafu=100000;
+                    KR0=sprintf("%"int(age_count[0]/delka_grafu)"s","");  gsub(" ","#",KR0); 
+                    print "0-5   : "KR0;
+                    KR1=sprintf("%"int(age_count[1]/delka_grafu)"s","");  gsub(" ","#",KR1); 
+                    print "6-15  : "KR1;
+                    KR2=sprintf("%"int(age_count[2]/delka_grafu)"s","");  gsub(" ","#",KR2); 
+                    print "16-25 : "KR2;
+                    KR3=sprintf("%"int(age_count[3]/delka_grafu)"s","");  gsub(" ","#",KR3); 
+                    print "26-35 : "KR3;
+                    KR4=sprintf("%"int(age_count[4]/delka_grafu)"s","");  gsub(" ","#",KR4); 
+                    print "36-45 : "KR4;
+                    KR5=sprintf("%"int(age_count[5]/delka_grafu)"s","");  gsub(" ","#",KR5); 
+                    print "46-55 : "KR5;
+                    KR6=sprintf("%"int(age_count[6]/delka_grafu)"s","");  gsub(" ","#",KR6); 
+                    print "56-65 : "KR6;
+                    KR7=sprintf("%"int(age_count[7]/delka_grafu)"s","");  gsub(" ","#",KR7); 
+                    print "66-75 : "KR7;
+                    KR8=sprintf("%"int(age_count[8]/delka_grafu)"s","");  gsub(" ","#",KR8); 
+                    print "76-85 : "KR8;
+                    KR9=sprintf("%"int(age_count[9]/delka_grafu)"s","");  gsub(" ","#",KR9); 
+                    print "86-95 : "KR9;
+                    KR10=sprintf("%"int(age_count[10]/delka_grafu)"s","");  gsub(" ","#",KR10); 
+                    print "96-105: "KR10;
+                    KR11=sprintf("%"int(age_count[11]/delka_grafu)"s","");  gsub(" ","#",KR11); 
+                    print ">105  : "KR11;
+                    if (age_count[12] > 0) {
+                        KR12=sprintf("%"int(age_count[12]/delka_grafu)"s","");  gsub(" ","#",KR12); 
+                        print "None  : "KR12;
+                    }
                 }
             }    
         }'
@@ -263,7 +264,7 @@ case "${cmd}" in
     } 
     END{
         print ""datum": "count"";
-    }'
+    }' #ff0000 chybý none
         
     ;;
     districts) cat ${soubor}| sed 1d | filtry | sort -t, -k6 | awk -F, 'BEGIN {
@@ -333,7 +334,7 @@ case "${cmd}" in
     } 
     END{
         print ""datum": "count"";
-    }'
+    }' #ff0000 chybý none
 
     ;;
     regions) cat ${soubor}| sed 1d | filtry | sort -t, -k5 | awk -F, 'BEGIN {
@@ -384,7 +385,7 @@ case "${cmd}" in
     } 
     END{
         print ""datum": "count"";
-    }'
+    }' #ff0000 chybý none
 
     ;;
     *) hlavicka;

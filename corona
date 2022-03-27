@@ -159,8 +159,8 @@ zeme_nakazy () {
     } 
     {   
         if (zeme == "") {
-        zeme=$8;
-        next;
+            zeme=$8;
+            next;
         }
         if (zeme == $8) {
             count++;

@@ -201,7 +201,7 @@ zeme_nakazy () {
                     }
                 }
                 delka_grafu=int(tmp/delka_grafu);
-                for (i=0; i < pos; i++) {
+                for (i=0; i <= pos; i++) {
                     histogram=sprintf("%"int(count_arr[i]/delka_grafu)"s","");  
                     gsub(" ","#",histogram); 
                     print zem_arr[i]": "histogram;

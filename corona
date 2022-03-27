@@ -4,7 +4,7 @@ LANG=cs_CZ.UTF-8
 #TODO err zprávy na stderr
 #!BUG bez filtru to počítá i první řádek infected
 
-####################################################################
+########################### FUNKCE #################################
 ## Help ##
 print_help () {
     echo -e '\e[1;mJMÉNO\033[0m'
@@ -156,7 +156,6 @@ zeme_nakazy () {
         pos=0;
         zem_arr[0]=0;
         count_arr[0]=0;
-        if (delka_grafu == 0) {delka_grafu=100;}
     } 
     {   
         if (zeme == "") {
@@ -170,8 +169,8 @@ zeme_nakazy () {
             if (zeme != "CZ") {
                 if (delka_grafu == -1) {
                     print ""zeme": "count"";
-                } else if (delka_grafu == 100) {
-                    histogram=sprintf("%"int(count/delka_grafu)"s","");  
+                } else if (delka_grafu == 0) {
+                    histogram=sprintf("%"int(count/100)"s","");  
                     gsub(" ","#",histogram); 
                     print zeme ": " histogram;
                 } else {
@@ -188,8 +187,8 @@ zeme_nakazy () {
         if (zeme != "") {
             if (delka_grafu == -1) {
                 print ""zeme": "count"";
-            } else if (delka_grafu == 100) {
-                histogram=sprintf("%"int(count/delka_grafu)"s","");  
+            } else if (delka_grafu == 0) {
+                histogram=sprintf("%"int(count/100)"s","");
                 gsub(" ","#",histogram); 
                 print zeme ": " histogram;
             } else {

@@ -207,7 +207,11 @@ zeme_nakazy () {
                     gsub(" ","#",histogram); 
                     print zem_arr[i]": "histogram;
                 }
-
+                if (zeme_arr[pos] != "") {
+                    histogram=sprintf("%"int(count_arr[pos]/delka_grafu)"s","");  
+                    gsub(" ","#",histogram); 
+                    print zem_arr[pos]": "histogram;
+                }
             }
         }
     }'

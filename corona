@@ -249,8 +249,12 @@ case "${cmd}" in
         }
     } 
     END{
-        print ""datum": "count"";
-    }' #ff0000 chybý none
+        if (datum != "") {
+            print ""datum": "count"";
+        } else {
+            print "None: "count;
+        }
+    }'
         
     ;;
     districts) cat ${soubor}| sed 1d | filtry | sort -t, -k6 | awk -F, 'BEGIN {
@@ -350,8 +354,12 @@ case "${cmd}" in
         }
     } 
     END{
-        print ""datum": "count"";
-    }' #ff0000 chybý none
+        if (datum != "") {
+            print ""datum": "count"";
+        } else {
+            print "None: "count;
+        }
+    }'
 
     ;;
     regions) cat ${soubor}| sed 1d | filtry | sort -t, -k5 | awk -F, 'BEGIN {
@@ -401,8 +409,12 @@ case "${cmd}" in
         }
     } 
     END{
-        print ""datum": "count"";
-    }' #ff0000 chybý none
+        if (datum != "") {
+            print ""datum": "count"";
+        } else {
+            print "None: "count;
+        }
+    }'
 
     ;;
     *) hlavicka;

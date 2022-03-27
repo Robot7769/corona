@@ -219,12 +219,6 @@ case "${cmd}" in
     countries) cat ${soubor}| sed 1d | filtry | sort -t, -k8 | awk -F, 'BEGIN {
         zeme="";
         count=1;
-        none=0;
-    }
-    {
-        if ($8 == "") {
-            none++;
-        } 
     } 
     {
         if (zeme == "") {
@@ -242,7 +236,6 @@ case "${cmd}" in
     } 
     END{
         if (zeme != "") {print ""zeme": "count"";}
-        if (none > 0) {print "None: "none"";}
     }'
         
     ;;

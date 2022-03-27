@@ -117,7 +117,6 @@ vek () {
 #   exit
 #fi
 
-cislo='^[0-9]+$'
 
 pohlavi=""
 pred_datum=""
@@ -133,7 +132,7 @@ while [ $# -ne 0 ]; do
         -a) po_datum=$2;shift;;
         -b) pred_datum=$2;shift;;
         -g) pohlavi=$2;shift;;
-        -s) if  [[ $2 =~ $cislo ]]; then
+        -s) if  [[ $2 =~ ^[0-9]+$ ]]; then
                 delka_grafu=$2;
                 shift;        #!tady bude problém 
             else

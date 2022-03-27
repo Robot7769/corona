@@ -262,7 +262,7 @@ while [ $# -ne 0 ]; do
             fi ;;
         *.gz) zcat "$1" ;; #add check comand 
         *.bz2) bzcat "$1";; #add check comand
-        *.csv) soubor+=" $1";;
+        *.csv) soubor+=" $1";; #E250FF více souborů jenom u marge
 
    esac
 shift
@@ -288,7 +288,7 @@ fi
 
 case "${cmd}" in
     age) vek;;
-    
+
     countries) zeme_nakazy;;
 
     daily) cat ${soubor}| sed 1d | filtry | sort -t, -k2 | awk -F, '{

@@ -149,6 +149,49 @@ vek () {
     }'
 }
 
+pocet_nak_pohlavi () {
+    cat ${soubor}| sed 1d | filtry | awk -F, "-vdelka_grafu=$delka_grafu" 'BEGIN{
+        M=0;
+        Z=0;
+        count=0;
+        none=0
+    } {
+        if ($4=="M") M++;
+        if ($4=="Z") Z++;
+        count++;
+    } 
+    END{
+        none=(count - M - Z ); 
+        if (delka_grafu == -1) {
+            print "M: "M"\nZ: "Z"";
+            if (none > 0) print "None: "none""; 
+        } else {
+            if (delka_grafu == 0) {delka_grafu=100000;}
+            else {
+                if ((M >= Z) && (M >= none )) {
+                    tmp=M;
+                } else if ((Z >= M) && (Z >= none )) {
+                    tmp=Z;
+                } else {
+                    tmp=none;
+                }
+                delka_grafu=int(tmp/delka_grafu);
+            }
+            histogram=sprintf("%"int(M/delka_grafu)"s","");  
+            gsub(" ","#",histogram); 
+            print "M: " histogram;
+            histogram=sprintf("%"int(Z/delka_grafu)"s","");  
+            gsub(" ","#",histogram); 
+            print "Z: " histogram;
+            if (none > 0) {
+                histogram=sprintf("%"int(none/delka_grafu)"s","");  
+                gsub(" ","#",histogram); 
+                print "None: " histogram;
+            }
+        }
+    }'
+}
+
 zeme_nakazy () {
     cat ${soubor}| sed 1d | filtry | sort -t, -k8 | awk -F, "-vdelka_grafu=$delka_grafu" 'BEGIN {
         zeme="";
@@ -481,46 +524,7 @@ case "${cmd}" in
     ;;
     districts) kraje_nakazy;;
 
-    gender) cat ${soubor}| sed 1d | filtry | awk -F, "-vdelka_grafu=$delka_grafu" 'BEGIN{
-        M=0;
-        Z=0;
-        count=0;
-        none=0
-    } {
-        if ($4=="M") M++;
-        if ($4=="Z") Z++;
-        count++;
-    } 
-    END{
-        none=(count - M - Z ); 
-        if (delka_grafu == -1) {
-            print "M: "M"\nZ: "Z"";
-            if (none > 0) print "None: "none""; 
-        } else {
-            if (delka_grafu == 0) {delka_grafu=100000;}
-            else {
-                if ((M >= Z) && (M >= none )) {
-                    tmp=M;
-                } else if ((Z >= M) && (Z >= none )) {
-                    tmp=Z;
-                } else {
-                    tmp=none;
-                }
-                delka_grafu=int(tmp/delka_grafu);
-            }
-            histogram=sprintf("%"int(M/delka_grafu)"s","");  
-            gsub(" ","#",histogram); 
-            print "M: " histogram;
-            histogram=sprintf("%"int(Z/delka_grafu)"s","");  
-            gsub(" ","#",histogram); 
-            print "Z: " histogram;
-            if (none > 0) {
-                histogram=sprintf("%"int(none/delka_grafu)"s","");  
-                gsub(" ","#",histogram); 
-                print "None: " histogram;
-            }
-        }
-    }'
+    gender) pocet_nak_pohlavi
     ;;
     infected)
         cat ${soubor}| sed 1d | filtry | awk -F, 'BEGIN{radek=0} {if ($0 > 0) radek++} END{ print radek}'

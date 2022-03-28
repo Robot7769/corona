@@ -133,7 +133,10 @@ vek () {
                         tmp=age_count[i];
                     }
                 }
-                delka_grafu=int(tmp/delka_grafu);
+                delka_grafu=(tmp/delka_grafu);
+                if (delka_grafu == 0) {
+                    delka_grafu+=1;
+                }
             }
             for (i=0; i < 12; i++) {
                 histogram=sprintf("%"int(age_count[i]/delka_grafu)"s","");  
@@ -175,7 +178,10 @@ pocet_nak_pohlavi () {
                 } else {
                     tmp=none;
                 }
-                delka_grafu=int(tmp/delka_grafu);
+                delka_grafu=(tmp/delka_grafu);
+                if (delka_grafu == 0) {
+                    delka_grafu+=1;
+                }
             }
             histogram=sprintf("%"int(M/delka_grafu)"s","");  
             gsub(" ","#",histogram); 
@@ -244,7 +250,10 @@ zeme_nakazy () {
                     tmp=count_arr[i];
                 }
             }
-            delka_grafu=int(tmp/delka_grafu);
+            delka_grafu=(tmp/delka_grafu);
+            if (delka_grafu == 0) {
+                delka_grafu+=1;
+            }
             for (i=0; i <= pos; i++) {
                 histogram=sprintf("%"int(count_arr[i]/delka_grafu)"s","");  
                 gsub(" ","#",histogram); 
@@ -321,7 +330,10 @@ kraje_nakazy () {
                     tmp=count_arr[i];
                 }
             }
-            delka_grafu=int(tmp/delka_grafu);
+            delka_grafu=(tmp/delka_grafu);
+            if (delka_grafu == 0) {
+                delka_grafu+=1;
+            }
             for (i=0; i < pos; i++) {
                 histogram=sprintf("%"int(count_arr[i]/delka_grafu)"s","");  
                 gsub(" ","#",histogram); 
@@ -403,7 +415,10 @@ region_nakazy () {
                     tmp=count_arr[i];
                 }
             }
-            delka_grafu=int(tmp/delka_grafu);
+            delka_grafu=(tmp/delka_grafu);
+            if (delka_grafu == 0) {
+                delka_grafu+=1;
+            }
             for (i=0; i < pos; i++) {
                 histogram=sprintf("%"int(count_arr[i]/delka_grafu)"s","");  
                 gsub(" ","#",histogram); 
@@ -444,7 +459,7 @@ while [ $# -ne 0 ]; do
         -a) po_datum=$2;shift;;
         -b) pred_datum=$2;shift;;
         -g) pohlavi=$2;shift;
-            if [[ pohlavi != "M" || pohlavi != "Z" ]]; then
+            if [[ $pohlavi != "M" && $pohlavi != "Z" ]]; then
                 echo "U přepínače -g je $pohlavi což není validní" 1>&2
                 exit
             fi

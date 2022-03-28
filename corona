@@ -531,7 +531,8 @@ case "${cmd}" in
     END{
         if (datum != "") {
             print ""datum": "count"";
-        } else if (count > 0) {
+        } 
+        if (count > 0) {
             print "None: "count;
         }
     }'
@@ -569,7 +570,8 @@ case "${cmd}" in
     END{
         if (datum != "") {
             print ""datum": "count"";
-        } else if (count > 0) {
+        }
+        if (count > 0) {
             print "None: "count;
         }
     }'
@@ -596,7 +598,8 @@ case "${cmd}" in
     END{
         if (datum != "") {
             print ""datum": "count"";
-        } else if (count > 0) {
+        }
+        if (count > 0) {
             print "None: "count;
         }
     }'
